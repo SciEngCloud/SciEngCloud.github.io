@@ -1,0 +1,1 @@
+This folder contains the C programs that were used in the AWS CfnCluster demo describe in the book.  
