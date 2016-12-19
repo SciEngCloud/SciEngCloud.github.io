@@ -1,0 +1,26 @@
+{"subject": "phys",
+"loadset": ["astro-ph.CO", "astro-ph.EP", "astro-ph.GA", "astro-ph.HE", "astro-ph.IM", 
+        "astro-ph.SR", "cond-mat.dis-nn", "cond-mat.mes-hall", "cond-mat.mtrl-sci", 
+        "cond-mat.other", "cond-mat.quant-gas", "cond-mat.soft", "cond-mat.stat-mech", 
+        "cond-mat.str-el", "cond-mat.supr-con", "nucl-th", "quant-ph", 
+        "gr-qc", "hep-ex", "hep-ph", "hep-th", "math-ph",
+    "physics.acc-ph", "physics.ao-ph", "physics.atm-clus", "physics.atom-ph", 
+    "physics.bio-ph", "physics.chem-ph", "physics.class-ph", "physics.comp-ph", 
+    "physics.data-an", "physics.ed-ph", "physics.flu-dyn", "physics.gen-ph", 
+    "physics.geo-ph", "physics.hist-ph", "physics.ins-det", "physics.med-ph", 
+    "physics.optics", "physics.plasm-ph", "physics.pop-ph", "physics.soc-ph", 
+    "physics.space-ph"],
+"basepath": "c:/users/dennis/desktop/",
+"supertopics" : [
+    ["Astro", ["astro-ph.CO", "astro-ph.EP", "astro-ph.GA", "astro-ph.HE", "astro-ph.IM", "physics.space-ph", "astro-ph.SR"]], 
+    ["GenRelQGr", ["gr-qc"]],
+    ["Cond Matter", ["cond-mat.other", "cond-mat.mes-hall", "cond-mat.quant-gas", "cond-mat.soft", "cond-mat.stat-mech", "physics.plasm-ph", 
+        "cond-mat.str-el", "cond-mat.mtrl-sci", "cond-mat.supr-con"]], 
+    ["high eng", ["hep-ex", "hep-ph", "hep-th", "nucl-th", "physics.acc-ph", "physics.ao-ph", "physics.atm-clus", "physics.atom-ph"] ],
+    ["MathPh", ["math-ph",  "physics.comp-ph","physics.data-an", "physics.flu-dyn"]],
+    ["quantum",["quant-ph"]],
+    ["ed-physics",["physics.pop-ph", "physics.soc-ph","physics.hist-ph", "physics.ed-ph", "physics.ins-det", "physics.gen-ph"]],
+    ["other-phy",[ "physics.med-ph", "physics.bio-ph", "physics.chem-ph", "physics.geo-ph", "physics.optics", "physics.class-ph"]]
+    ]
+}
+

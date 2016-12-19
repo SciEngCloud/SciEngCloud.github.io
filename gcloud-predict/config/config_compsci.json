@@ -1,0 +1,18 @@
+{"subject": "compsci",
+"loadset": [
+		"cs.AI", "cs.AR", "cs.CC", "cs.CE", "cs.CG", "cs.CL", "cs.CR", 
+        "cs.CV", "cs.CY", "cs.DB", "cs.DC", "cs.DL", "cs.DM", "cs.DS", "cs.ET", 
+        "cs.FL", "cs.GR", "cs.GT", "cs.HC", "cs.IR", "cs.IT", "cs.LG", "cs.LO", 
+        "cs.MA", "cs.MM", "cs.MS", "cs.NA", "cs.NE", "cs.NI", "cs.OH", "cs.OS", 
+        "cs.PL", "cs.RO", "cs.SD", "cs.SE", "cs.SI", "cs.SY", "stat.ML"],
+"basepath": "c:/users/dennis/desktop/",
+"supertopics" : [
+  ["AI-ML",  ["cs.AI", "cs.CV", "cs.RO", "cs.LG", "cs.CL", "cs.CY","cs.NE", "cs.ET", "stat.ML"]],
+  ["eng-soft",  ["cs.CE", "cs.MS", "cs.NA"]],
+  ["cs-game",  ["cs.GT"]],
+  ["Theory",  ["cs.DS", "cs.CC", "cs.CG", "cs.DM", "cs.FL", "cs.LO"]],
+  ["Systems",  ["cs.AR", "cs.DC", "cs.OS", "cs.MA", "cs.PL", "cs.SE", "cs.SY"]],
+  ["HCI-gr",  ["cs.HC", "cs.GR", "cs.MM", "cs.SD"]],
+  ["DB-IR",  ["cs.IT", "cs.DB", "cs.IR", "cs.DL"]],
+  ["net-soc",  ["cs.CR", "cs.SI", "cs.NI", "cs.OH"]]] 
+}

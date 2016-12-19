@@ -1,0 +1,12 @@
+(lp0
+VPhysics
+p1
+aVmath
+p2
+aVbio
+p3
+aVcompsci
+p4
+aVfinance
+p5
+a.

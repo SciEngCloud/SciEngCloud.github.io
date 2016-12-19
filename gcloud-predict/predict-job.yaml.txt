@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mtest-job
+spec:
+  parallelism: 20
+  template:
+    metadata:
+      name: job-wq-2
+    spec:
+      containers:
+      - name: c
+        image: gcr.io/silicon-works-136723/mtest
+        args: ["amqp://guest@149.165.168.78"]
+      restartPolicy: OnFailure

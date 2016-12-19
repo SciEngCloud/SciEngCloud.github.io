@@ -1,0 +1,14 @@
+{"subject": "finan",
+"loadset": ["q-fin.CP", "q-fin.EC", "q-fin.GN", "q-fin.MF", "q-fin.PM", 
+        "q-fin.PR", "q-fin.RM", "q-fin.ST", "q-fin.TR"],
+"basepath": "c:/users/dennis/desktop/",
+"supertopics" : [
+    ["Computational Finance", ["q-fin.CP", "q-fin.MF"] ],
+    ["Economics", ["q-fin.EC"]],
+    ["Statistical Finance", ["q-fin.ST"]],
+    ["Portfolio Management", ["q-fin.PM"]],
+    ["markets", ["q-fin.TR", "q-fin.PR" ]],
+    ["Risk Management", ["q-fin.RM"]],
+    ["General finance", ["q-fin.GN"]]]
+   }
+

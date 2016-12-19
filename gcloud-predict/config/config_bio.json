@@ -1,0 +1,16 @@
+{"subject": "q-bio",
+"loadset": ["q-bio.BM", "q-bio.CB", "q-bio.GN", "q-bio.MN", 
+        "q-bio.NC", "q-bio.OT", 
+        "q-bio.PE", "q-bio.QM", "q-bio.SC", "q-bio.TO" ],
+"basepath": "c:/users/dennis/desktop/",
+"supertopics": [["Neuro", ["q-bio.NC"]],
+                [ "Cell behavior", [ "q-bio.CB"]],
+                ["Genomics", ["q-bio.GN"]], 
+                ["Evolution",["q-bio.PE"]],
+                ["Subcellular", ["q-bio.SC"]], 
+                ["Health-Tissue&organs", ["q-bio.TO", "q-bio.OT"]], 
+                ["Molecular_networks", ["q-bio.MN","q-bio.BM"]],
+                ["modeling", ["q-bio.QM"]]
+                ]
+}
+                
