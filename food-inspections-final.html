@@ -11845,7 +11845,7 @@ $$\sigma (t)= \frac {e^t}{e^{t}+1} =\frac {1}{1+e^{-t}}$$<p>It is used frequentl
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1">#inspections = spark.sparkContext.textFile(&#39;wasb:///HdiSamples/HdiSamples/FoodInspectionData/Food_Inspections1.csv&#39;)\</span>
 <span class="c1">#                .map(csvParse)</span>
 
-<span class="n">inspections</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s1">&#39;/path-to-simple-data/Food_Inspections1.csv&#39;</span><span class="p">)</span>\
+<span class="n">inspections</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s1">&#39;/users/dennisgannon/OneDrive/Docs7/Food_Inspections1.csv&#39;</span><span class="p">)</span>\
                 <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">csvParse</span><span class="p">)</span>
 </pre></div>
 
@@ -11885,10 +11885,10 @@ $$\sigma (t)= \frac {e^t}{e^{t}+1} =\frac {1}{1+e^{-t}}$$<p>It is used frequentl
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[230]:</div>
+<div class="prompt input_prompt">In&nbsp;[296]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">inspections</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">inspections</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -11899,7 +11899,7 @@ $$\sigma (t)= \frac {e^t}{e^{t}+1} =\frac {1}{1+e^{-t}}$$<p>It is used frequentl
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[230]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[296]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -11940,53 +11940,7 @@ $$\sigma (t)= \frac {e^t}{e^{t}+1} =\frac {1}{1+e^{-t}}$$<p>It is used frequentl
   &#39;THE GUNDIS KURDISH KITCHEN&#39;,
   &#39;Fail&#39;,
   &#39;9. WATER SOURCE: SAFE, HOT &amp; COLD UNDER CITY PRESSURE - Comments:  | 11. ADEQUATE NUMBER, CONVENIENT, ACCESSIBLE, DESIGNED, AND MAINTAINED - Comments:  | 12. HAND WASHING FACILITIES: WITH SOAP AND SANITARY HAND DRYING DEVICES, CONVENIENT AND ACCESSIBLE TO FOOD PREP AREA - Comments:  | 18. NO EVIDENCE OF RODENT OR INSECT OUTER OPENINGS PROTECTED/RODENT PROOFED, A WRITTEN LOG SHALL BE MAINTAINED AVAILABLE TO THE INSPECTORS - Comments:  | 35. WALLS, CEILINGS, ATTACHED EQUIPMENT CONSTRUCTED PER CODE: GOOD REPAIR, SURFACES CLEAN AND DUST-LESS CLEANING METHODS - Comments:  | 36. LIGHTING: REQUIRED MINIMUM FOOT-CANDLES OF LIGHT PROVIDED, FIXTURES SHIELDED - Comments:  | 40. REFRIGERATION AND METAL STEM THERMOMETERS PROVIDED AND CONSPICUOUS - Comments:  | 41. PREMISES MAINTAINED FREE OF LITTER, UNNECESSARY ARTICLES, CLEANING  EQUIPMENT PROPERLY STORED - Comments:  | 70. NO SMOKING REGULATIONS - Comments: &#39;],
- [&#39;1977202&#39;, &#39;CHIU QUON INC&#39;, &#39;CHIU QUON&#39;, &#39;Out of Business&#39;, &#39;&#39;],
- [&#39;1977204&#39;,
-  &#39;THE GUNDIS KURDISH KITCHEN&#39;,
-  &#39;THE GUNDIS KURDISH KITCHEN&#39;,
-  &#39;Fail&#39;,
-  &#34;9. WATER SOURCE: SAFE, HOT &amp; COLD UNDER CITY PRESSURE - Comments: NO HOT WATER THROUGHOUT PREMISES. MUST PROVIDE. | 12. HAND WASHING FACILITIES: WITH SOAP AND SANITARY HAND DRYING DEVICES, CONVENIENT AND ACCESSIBLE TO FOOD PREP AREA - Comments: MUST PROVIDE SOAP AND PAPER TOWELS AT ALL HAND SINKS. | 11. ADEQUATE NUMBER, CONVENIENT, ACCESSIBLE, DESIGNED, AND MAINTAINED - Comments: MUST INSTALL AN EXPOSED HAND WASHING SINK WITH HOT AND COLD RUNNING WATER, SOAP AND PAPER TOWELS AT THE BAR. | 18. NO EVIDENCE OF RODENT OR INSECT OUTER OPENINGS PROTECTED/RODENT PROOFED, A WRITTEN LOG SHALL BE MAINTAINED AVAILABLE TO THE INSPECTORS - Comments: BOTH FRONT ENTRANCE/EXIT DOORS AND REAR KITCHEN DOOR NOT RODENT PROOFED. OPEN GAPS ON THE BOTTOM OF THE DOORS. MUST INSTALL RODENT PROOF STRIPPING ON ALL DOORS AND PROVIDE TIGHT FITTING SEALS. | 40. REFRIGERATION AND METAL STEM THERMOMETERS PROVIDED AND CONSPICUOUS - Comments: MUST PROVIDE A METAL STEM THERMOMETER FOR CHECKING FOOD TEMPERATURES AND AN INTERNAL THERMOMETER FOR THE GLASS DOOR, TALL TWO DOOR COOLER IN THE KITCHEN. | 41. PREMISES MAINTAINED FREE OF LITTER, UNNECESSARY ARTICLES, CLEANING  EQUIPMENT PROPERLY STORED - Comments: ALL CONSTRUCTION MATERIAL MUST BE REMOVED FROM THE GROUNDS THROUGHOUT THE REAR OUTDOOR AREA. UNUSED COOLER IN THE KITCHEN MUST BE REMOVED OR REPAIRED TO MAINTAIN ADEQUATE TEMPERATURE.   | 36. LIGHTING: REQUIRED MINIMUM FOOT-CANDLES OF LIGHT PROVIDED, FIXTURES SHIELDED - Comments: MUST PROVIDE LIGHT SHIELDS, OR SHATTER PROOF BULBS THROUGHOUT THE KITCHEN AND DISH AREA. | 35. WALLS, CEILINGS, ATTACHED EQUIPMENT CONSTRUCTED PER CODE: GOOD REPAIR, SURFACES CLEAN AND DUST-LESS CLEANING METHODS - Comments: HANGING/FALLING TAPE AND INSULATION FROM THE LEFT CEILING NEXT TO THE EXHAUST HOOD. MUST REMOVE/RE-SEAL EXHAUST PIPING INSULATION. | 70. NO SMOKING REGULATIONS - Comments: NO &#39;NO SMOKING&#39; SIGNAGE AT THE FRONT ENTRANCE/EXIT DOOR. MUST PROVIDE.&#34;],
- [&#39;1977193&#39;,
-  &#39;THE FLOWER FLAT&#39;,
-  &#39;THE FLOWER FLAT&#39;,
-  &#39;Pass&#39;,
-  &#39;35. WALLS, CEILINGS, ATTACHED EQUIPMENT CONSTRUCTED PER CODE: GOOD REPAIR, SURFACES CLEAN AND DUST-LESS CLEANING METHODS - Comments: OBSERVED PEELING ON WALL BEHIND HANDWASHING SINK INSIDE BATHROOM. MUST REPAINT AND MAINTAIN. | 37. TOILET ROOM DOORS SELF CLOSING: DRESSING ROOMS WITH LOCKERS PROVIDED: COMPLETE SEPARATION FROM LIVING/SLEEPING QUARTERS - Comments: OBSERVED WASHROOM DOOR NOT SELF CLOSING. MUST PROVIDE A SELF CLOSING DEVICE. | 38. VENTILATION: ROOMS AND EQUIPMENT VENTED AS REQUIRED: PLUMBING: INSTALLED AND MAINTAINED - Comments: ADDITIONAL WATER PRESSURE NEEDED IN THE HAND WASHING SINK IN THE BATHROOM. MUST REPAIR AND MAINTAIN.&#39;],
- [&#39;1977144&#39;,
-  &#39;BILLY GOAT IV INC&#39;,
-  &#39;BILLY GOAT (T1/C18 FOOD COURT)&#39;,
-  &#39;Pass&#39;,
-  &#39;35. WALLS, CEILINGS, ATTACHED EQUIPMENT CONSTRUCTED PER CODE: GOOD REPAIR, SURFACES CLEAN AND DUST-LESS CLEANING METHODS - Comments: INSTRUCTED TO DETAIL CLEAN AND MAINTAIN CONDENSER FAN COVER WITH DUST ACCUMULATION INSIDE WALK-IN COOLER IN BASEMENT STORAGE. | 33. FOOD AND NON-FOOD CONTACT EQUIPMENT UTENSILS CLEAN, FREE OF ABRASIVE DETERGENTS - Comments: INSTRUCTED TO DETAIL CLEAN AND MAINTAIN INTERIOR AND EXTERIOR SURFACES OF EXPOSED HAND SINK AND 3 COMPARTMENT SINK.&#39;],
- [&#39;1977191&#39;,
-  &#39;KIDS YARD&#39;,
-  &#39;KIDS YARD&#39;,
-  &#39;Pass&#39;,
-  &#34;31. CLEAN MULTI-USE UTENSILS AND SINGLE SERVICE ARTICLES PROPERLY STORED: NO REUSE OF SINGLE SERVICE ARTICLES - Comments: Must install drain board for clean dishes once they are washed, rinsed and sanitized. Must maintain same.  | 32. FOOD AND NON-FOOD CONTACT SURFACES PROPERLY DESIGNED, CONSTRUCTED AND MAINTAINED - Comments: Found raw wood surfaces under front counter. Must seal or paint all porous surfaces to make smooth and easily cleanable. Must maintain same.  | 34. FLOORS: CONSTRUCTED PER CODE, CLEANED, GOOD REPAIR, COVING INSTALLED, DUST-LESS CLEANING METHODS USED - Comments: Found missing baseboards/coving in 2 of the 3 walls in the utility closet. Must repair/replace.  Found hole in floor of storage closet. Must repair.  Must maintain all. | 40. REFRIGERATION AND METAL STEM THERMOMETERS PROVIDED AND CONSPICUOUS - Comments: Thermometers must be provided in a conspicuous spot inside all refrigeration units (or outside refrigeration thermometer display must be functioning correctly). Must provided stem thermometers for testing internal food temperatures. | 35. WALLS, CEILINGS, ATTACHED EQUIPMENT CONSTRUCTED PER CODE: GOOD REPAIR, SURFACES CLEAN AND DUST-LESS CLEANING METHODS - Comments: Found open gaps between walls and pipe in rear kitchen area. Must seal all holes or gaps (around pipe) in walls to prevent pest entry. Must maintain same.  | 38. VENTILATION: ROOMS AND EQUIPMENT VENTED AS REQUIRED: PLUMBING: INSTALLED AND MAINTAINED - Comments: Found restrooms without working ventilation. Must provide properly functioning exhaust fans in all restrooms. Must maintain same.  Found washbowl # 2 in men&#39;s restroom in disrepair. Must repair and maintain. &#34;],
- [&#39;1977195&#39;,
-  &#39;PREMIER CATERING &amp; EVENTS&#39;,
-  &#39;PREMIER CATERING &amp; EVENTS&#39;,
-  &#39;Pass&#39;,
-  &#39;40. REFRIGERATION AND METAL STEM THERMOMETERS PROVIDED AND CONSPICUOUS - Comments: MUST PROVIDE THERMOMETERS FOR ALL REACH IN COOLERS.&#39;],
- [&#39;1977188&#39;,
-  &#39;URBAN  INTERESTS&#39;,
-  &#34;BORELLI&#39;S&#34;,
-  &#39;Fail&#39;,
-  &#39;18. NO EVIDENCE OF RODENT OR INSECT OUTER OPENINGS PROTECTED/RODENT PROOFED, A WRITTEN LOG SHALL BE MAINTAINED AVAILABLE TO THE INSPECTORS - Comments: SEE INSPECTION # 1977179 DATED 12-15-16. | 31. CLEAN MULTI-USE UTENSILS AND SINGLE SERVICE ARTICLES PROPERLY STORED: NO REUSE OF SINGLE SERVICE ARTICLES - Comments: SEE INSPECTION # 1977179 DATED 12-15-16. | 32. FOOD AND NON-FOOD CONTACT SURFACES PROPERLY DESIGNED, CONSTRUCTED AND MAINTAINED - Comments: SEE INSPECTION # 1977179 DATED 12-15-16. | 34. FLOORS: CONSTRUCTED PER CODE, CLEANED, GOOD REPAIR, COVING INSTALLED, DUST-LESS CLEANING METHODS USED - Comments: SEE INSPECTION # 1977179 DATED 12-15-16. | 35. WALLS, CEILINGS, ATTACHED EQUIPMENT CONSTRUCTED PER CODE: GOOD REPAIR, SURFACES CLEAN AND DUST-LESS CLEANING METHODS - Comments: SEE INSPECTION # 1977179 DATED 12-15-16. | 36. LIGHTING: REQUIRED MINIMUM FOOT-CANDLES OF LIGHT PROVIDED, FIXTURES SHIELDED - Comments: SEE INSPECTION # 1977179 DATED 12-15-16. | 38. VENTILATION: ROOMS AND EQUIPMENT VENTED AS REQUIRED: PLUMBING: INSTALLED AND MAINTAINED - Comments: SEE INSPECTION # 1977179 DATED 12-15-16. | 41. PREMISES MAINTAINED FREE OF LITTER, UNNECESSARY ARTICLES, CLEANING  EQUIPMENT PROPERLY STORED - Comments: SEE INSPECTION # 1977179 DATED 12-15-16.&#39;],
- [&#39;1977186&#39;,
-  &#39;PREMIER CATERING &amp; EVENTS&#39;,
-  &#39;PREMIER CATERING &amp; EVENTS&#39;,
-  &#39;Pass&#39;,
-  &#39;&#39;],
- [&#39;1977183&#39;,
-  &#39;WALGREENS #5089&#39;,
-  &#39;WALGREENS #5089&#39;,
-  &#39;Pass&#39;,
-  &#39;14. PREVIOUS SERIOUS VIOLATION CORRECTED, 7-42-090 - Comments: PREVIOUS SERIOUS VIOLATIONS CORRECTED. | 34. FLOORS: CONSTRUCTED PER CODE, CLEANED, GOOD REPAIR, COVING INSTALLED, DUST-LESS CLEANING METHODS USED - Comments: CORRECTED. | 35. WALLS, CEILINGS, ATTACHED EQUIPMENT CONSTRUCTED PER CODE: GOOD REPAIR, SURFACES CLEAN AND DUST-LESS CLEANING METHODS - Comments: CORRECTED. | 41. PREMISES MAINTAINED FREE OF LITTER, UNNECESSARY ARTICLES, CLEANING  EQUIPMENT PROPERLY STORED - Comments: CORRECTED.&#39;],
- [&#39;1578842&#39;, &#39;TRUTH&#39;, &#39;TRUTH&#39;, &#39;Pass&#39;, &#39;&#39;],
- [&#39;1977184&#39;,
-  &#39;PARK TOWER MARKET&#39;,
-  &#39;PARK TOWER MARKET&#39;,
-  &#39;Pass w/ Conditions&#39;,
-  &#39;21. * CERTIFIED FOOD MANAGER ON SITE WHEN POTENTIALLY HAZARDOUS FOODS ARE  PREPARED AND SERVED - Comments: OBSERVED NO CITY OF CHICAGO CERTIFIED FOOD MANAGER ON SITE, NO ORIGINAL CITY OF CHICAGO CERTIFICATE POSTED WHILE POTENTIALLY HAZARDOUS FOOD IS BEING PREPARRED, COOKED AND SERVED INCLUDING BAKED CHICKEN, MACARONI AND CHEESE AND SOUP. SERIOUS VIOLATION 7-38-012 | 30. FOOD IN ORIGINAL CONTAINER, PROPERLY LABELED: CUSTOMER ADVISORY POSTED AS NEEDED - Comments: OBSERVED FOOD OUT OF ORIGINAL CONTAINER IN WALK IN FREEZER WITH NO LABELS AND NO DATES. ALL PREPARRED FOOD OUT OF ORIGINAL CONTAINER NEEDS A LABEL AND DATE ON ITEM. | 31. CLEAN MULTI-USE UTENSILS AND SINGLE SERVICE ARTICLES PROPERLY STORED: NO REUSE OF SINGLE SERVICE ARTICLES - Comments: OBSERVED THE REUSE OF SINGLE SERVICE ALLUMINUM PANS. ALLUMINUM PANS ARE NOT DESIGNED TO BE REUSED AND CAN NOT BE PROPERLY WASHED RINSED AND SANITIZED. ALL SINGLE SERVICE ALLUMUNIM PANS MUST BE DISCARDED AFTER USE.  | 35. WALLS, CEILINGS, ATTACHED EQUIPMENT CONSTRUCTED PER CODE: GOOD REPAIR, SURFACES CLEAN AND DUST-LESS CLEANING METHODS - Comments: OBSERVED WALL BEHIND 3 COMPARTMENT SINK IN DISREPAIR. MUST RESTORE TO A SMOOTH EASILY CLENABLE SURFACE AND MAITNAIN. | 36. LIGHTING: REQUIRED MINIMUM FOOT-CANDLES OF LIGHT PROVIDED, FIXTURES SHIELDED - Comments: OBSERVED LIGHT SHEILD IN WALK IN FREEZER MISSING. INSTALL AND MAINTAIN. | 41. PREMISES MAINTAINED FREE OF LITTER, UNNECESSARY ARTICLES, CLEANING  EQUIPMENT PROPERLY STORED - Comments: OBSERVED FRONT DELI AREA WITH TOO MUCH CLUTTER. REMOVE ALL UNECESSARY ITEMS AND KEEP FOOD PREPARATION AREA CLEAN.&#39;]]</pre>
+ [&#39;1977202&#39;, &#39;CHIU QUON INC&#39;, &#39;CHIU QUON&#39;, &#39;Out of Business&#39;, &#39;&#39;]]</pre>
 </div>
 
 </div>
@@ -12016,10 +11970,10 @@ $$\sigma (t)= \frac {e^t}{e^{t}+1} =\frac {1}{1+e^{-t}}$$<p>It is used frequentl
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[232]:</div>
+<div class="prompt input_prompt">In&nbsp;[275]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12040,18 +11994,97 @@ $$\sigma (t)= \frac {e^t}{e^{t}+1} =\frac {1}{1+e^{-t}}$$<p>It is used frequentl
 |1978275|SHARKS FISH &amp; CHI...|           Pass|34. FLOORS: CONST...|
 |1978268|CARNITAS Y SUPERM...|           Pass|33. FOOD AND NON-...|
 |1978261|            WINGSTOP|           Pass|                    |
-|1978248|REACH HIGHER LEAR...|           Fail|2. FACILITIES TO ...|
-|1978242|SYS HAPPY LAND CH...|Out of Business|                    |
-|1978214|   NANDO&#39;S PERI PERI|           Pass|40. REFRIGERATION...|
-|1977206|THE GUNDIS KURDIS...|           Fail|9. WATER SOURCE: ...|
-|1977202|           CHIU QUON|Out of Business|                    |
 +-------+--------------------+---------------+--------------------+
-only showing top 10 rows
+only showing top 5 rows
 
 </pre>
 </div>
 </div>
 
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[280]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;passing = </span><span class="si">%d</span><span class="s2">&quot;</span><span class="o">%</span><span class="k">df</span>[df.results == &#39;Pass&#39;].count())
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;failing = </span><span class="si">%d</span><span class="s2">&quot;</span><span class="o">%</span><span class="k">df</span>[df.results == &#39;Fail&#39;].count())
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>passing = 61204
+failing = 20225
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[281]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[281]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>103994</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span> 
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span> 
+</pre></div>
+
+</div>
 </div>
 </div>
 
@@ -12675,11 +12708,12 @@ Bcu60AAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[239]:</div>
+<div class="prompt input_prompt">In&nbsp;[284]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">Tokenizer</span><span class="p">(</span><span class="n">inputCol</span><span class="o">=</span><span class="s2">&quot;violations&quot;</span><span class="p">,</span> <span class="n">outputCol</span><span class="o">=</span><span class="s2">&quot;words&quot;</span><span class="p">)</span>
-<span class="n">hashingTF</span> <span class="o">=</span> <span class="n">HashingTF</span><span class="p">(</span><span class="n">inputCol</span><span class="o">=</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">getOutputCol</span><span class="p">(),</span> <span class="n">outputCol</span><span class="o">=</span><span class="s2">&quot;features&quot;</span><span class="p">)</span>
+<span class="c1">#hashingTF = HashingTF(inputCol=tokenizer.getOutputCol(), outputCol=&quot;features&quot;)</span>
+<span class="n">hashingTF</span> <span class="o">=</span> <span class="n">HashingTF</span><span class="p">(</span><span class="n">inputCol</span><span class="o">=</span><span class="s2">&quot;words&quot;</span><span class="p">,</span> <span class="n">outputCol</span><span class="o">=</span><span class="s2">&quot;features&quot;</span><span class="p">)</span>
 <span class="n">lr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">maxIter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">regParam</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
 <span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">stages</span><span class="o">=</span><span class="p">[</span><span class="n">tokenizer</span><span class="p">,</span> <span class="n">hashingTF</span><span class="p">,</span> <span class="n">lr</span><span class="p">])</span>
 
@@ -12695,11 +12729,11 @@ Bcu60AAAAABJRU5ErkJggg==
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[239]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[284]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>PipelineModel_4454a4b1a963c1cfab01</pre>
+<pre>PipelineModel_4b838c0e8fdc2048a099</pre>
 </div>
 
 </div>
@@ -12710,10 +12744,52 @@ Bcu60AAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[240]:</div>
+<div class="prompt input_prompt">In&nbsp;[285]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">testData</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s1">&#39;path-to-simple-data/Food_Inspections2.csv&#39;</span><span class="p">)</span>\
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">hashingTF</span><span class="o">.</span><span class="n">getNumFeatures</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[285]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>262144</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span> 
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[295]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">testData</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s1">&#39;/users/dennisgannon/OneDrive/Docs7/Food_Inspections2.csv&#39;</span><span class="p">)</span>\
              <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">csvParse</span><span class="p">)</span> \
              <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">l</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">l</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">l</span><span class="p">[</span><span class="mi">4</span><span class="p">]))</span>
 <span class="n">testDf</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">testData</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;results = &#39;Fail&#39; OR results = &#39;Pass&#39; OR results = &#39;Pass w/ Conditions&#39;&quot;</span><span class="p">)</span>
@@ -12730,7 +12806,7 @@ Bcu60AAAAABJRU5ErkJggg==
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[240]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[295]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12753,7 +12829,7 @@ Bcu60AAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[241]:</div>
+<div class="prompt input_prompt">In&nbsp;[292]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">predictionsDf</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -12767,7 +12843,7 @@ Bcu60AAAAABJRU5ErkJggg==
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[241]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[292]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12782,7 +12858,7 @@ Bcu60AAAAABJRU5ErkJggg==
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[242]:</div>
+<div class="prompt input_prompt">In&nbsp;[293]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">numSuccesses</span> <span class="o">=</span> <span class="n">predictionsDf</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;(prediction = 0 AND results = &#39;Fail&#39;) OR </span>
