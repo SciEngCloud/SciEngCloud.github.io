@@ -16,6 +16,10 @@ import json
 
 from tornado.options import define, options
 
+## the following is an unsecure way to controll access
+## a better solution is to use docker secret repository
+## or to pass this information as a command line parameter 
+## when the instance is started.
 
 access_key = 'your key'
 secret_key = 'your secret key'
