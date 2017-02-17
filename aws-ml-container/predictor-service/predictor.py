@@ -81,7 +81,7 @@ def maketopdic(supertopics):
 
 def init_from_local(subj, basepath):
    
-	basepath = ''
+	#basepath = ''
 	subject, loadset, supertopics =read_config_from_local(subj, basepath)
 	cvectpath = basepath+"/count_vectorizer-"+subject+".p"
 	tfidftranpath = basepath+"/tfidf_transformer-"+subject+".p"
@@ -275,6 +275,7 @@ def bigpredict(statement, km, vectorizer, lsi, dictionary, index_lsi, lda, index
 	return rf, best, nextb, cent
 
 base = "/"
+#resent base to "" for container
 #ignoring the basepath param passed in
 subj = "all4"
 subject, loadset, supertopics =read_config_from_local(subj, base)

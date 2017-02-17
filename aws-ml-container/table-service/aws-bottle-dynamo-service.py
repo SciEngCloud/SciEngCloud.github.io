@@ -10,14 +10,15 @@ import json
 ## a better solution is to use docker secret repository
 ## or to pass this information as a command line parameter 
 ## when the instance is started.
-access_key = 'your key'
-secret_key = 'your secret key'
+## or even better:  use an aws ami role. 
+#access_key = 'your key'
+#secret_key = 'your secret key'
 
 # create a dynamo db table for the results
 dyndb = boto3.resource('dynamodb',
     region_name='us-west-2',
-    aws_access_key_id=access_key,
-    aws_secret_access_key=secret_key
+#    aws_access_key_id=access_key,
+#    aws_secret_access_key=secret_key
  )
  
 try:

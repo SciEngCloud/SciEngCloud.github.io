@@ -8,12 +8,16 @@ import requests
 import json
 from socket import gethostname
 hostnm = gethostname()
-try:
-	r = requests.get('http://169.254.169.254/latest/meta-data/local-ipv4')
-	webservice = r.content
-except:
-#	webservice = '10.0.0.6'
-	webservice = '54.201.144.148'
+
+#We need IP address of of the host that is running our webservice.
+#it is stored in /ipaddr by the script that called invoked this program
+#using the magic of the container gateway as follows
+#netstat -nr | grep '^0\.0\.0\.0' | awk '{print $2}' > /ipaddr
+
+f = open('/ipaddr', 'r')
+w = f.read()
+webservice = w[:-1]
+
 print 'webservice = '+ webservice
 
 pred = predictor()
@@ -22,16 +26,18 @@ pred = predictor()
 ## a better solution is to use docker secret repository
 ## or to pass this information as a command line parameter 
 ## when the instance is started.
+# even better: for AWS we will use the IAM role we created
+# as described in the text
 
-access_key = 'your access key'
-secret_key = 'your secret key'
+#access_key = 'your access key'
+#secret_key = 'your secret key'
 
 
 
 sqs = boto3.resource('sqs',
         region_name='us-west-2', 
-		aws_access_key_id = access_key,
-		aws_secret_access_key = secret_key
+#		aws_access_key_id = access_key,
+#		aws_secret_access_key = secret_key
 		)
 queuename = 'bookque'
 try:

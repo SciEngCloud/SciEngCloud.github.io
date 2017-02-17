@@ -11751,27 +11751,13 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="This-is-the-AWS-EC2-Container-Service-Demo">This is the AWS EC2 Container Service Demo<a class="anchor-link" href="#This-is-the-AWS-EC2-Container-Service-Demo">&#182;</a></h1><p>This notebook assumes you have created a container (here called cloudbook) by following the instructions in the book text.   here are the important points you must do first.</p>
-<h2 id="Cluster-set--up.">Cluster set  up.<a class="anchor-link" href="#Cluster-set--up.">&#182;</a></h2><p>Next you must create ec2 instances to populate the cluster.<br>
-Follow the instructions here</p>
-<p>If you need the instances to be visible to the world at certain ports, you will need a new security group.   Go to your resources in the ec2 management council.  Click on security group.  Look at your default security group.  Add inbound NFS port  2049 by selecting Edit inbound rules from the "actions" tab.   If you need extra inbound ports for your services you may then want to copy to new and add them there and give the new security group a name and description.  I created one with ports 8000-9000 open and give it the name ecs-security-group.</p>
-<p><a href="http://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_container_instance.html">http://docs.aws.amazon.com/AmazonECS/latest/developerguide/launch_container_instance.html</a></p>
-<p>Go to the console for launching instances and hit "launch instance" go to community aims and search for "amazon-ecs-optimized" and you should find  ami-1ccd1f7c if you are on us-west-2.    Select that one. Then the size you want.   T2.medium is fine.   Then go to configure launch instance details.<br>
-Set the number of instances (I choose 4), enable auto-assign public IP.   You next need an IAM role.  Set it.</p>
-<p>Next go to Advanced Details at the bottom of the page.   Paste the following in the text box</p>
-<hr>
-<h1 id="!/bin/bash">!/bin/bash<a class="anchor-link" href="#!/bin/bash">&#182;</a></h1><p>echo ECS_CLUSTER=cloudbook &gt;&gt; /etc/ecs/ecs.config</p>
-<hr>
-<p>Next go to "add storage".   The default is fine for now.  Tag it with name like 'cbook'.   Finally configure security group.   Choose select existing security group.  Your new group should be there.  If not, then look for default and copy-to-new and add the ports you need.</p>
-<p>Launch.   When you launch you will need to select your key pair in case you need to ssh into these new instances.</p>
-<h2 id="this-notebook">this notebook<a class="anchor-link" href="#this-notebook">&#182;</a></h2><p>This notebook shows you how to interact with the container service once you have your clust.</p>
-
+<h1 id="This-is-how-to-create-service-tasks-in-Amazon-ECS">This is how to create service tasks in Amazon ECS<a class="anchor-link" href="#This-is-how-to-create-service-tasks-in-Amazon-ECS">&#182;</a></h1>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">boto3</span>
@@ -11784,7 +11770,7 @@ Set the number of instances (I choose 4), enable auto-assign public IP.   You ne
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;ecs&#39;</span><span class="p">)</span>
@@ -11800,14 +11786,15 @@ Set the number of instances (I choose 4), enable auto-assign public IP.   You ne
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>the list operators return dictionaries and we usually want to see the Arns.</p>
+<h1 id="we-created-a-cluster-called-cloudbook-in-the-ecs-portal">we created a cluster called cloudbook in the ecs portal<a class="anchor-link" href="#we-created-a-cluster-called-cloudbook-in-the-ecs-portal">&#182;</a></h1><p>if we didn't, then go to the portal and do so.  instructions are in the book.</p>
+<p>let's see if we can find it</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">list_clusters</span><span class="p">()[</span><span class="s1">&#39;clusterArns&#39;</span><span class="p">]</span>
@@ -11821,7 +11808,7 @@ Set the number of instances (I choose 4), enable auto-assign public IP.   You ne
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[3]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[4]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -11835,9 +11822,19 @@ Set the number of instances (I choose 4), enable auto-assign public IP.   You ne
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Next let's see how many VMs (called containers in ecs) we have.  there shoud be two.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">instance_list</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">list_container_instances</span><span class="p">(</span><span class="n">cluster</span><span class="o">=</span><span class="s1">&#39;cloudbook&#39;</span><span class="p">)[</span><span class="s1">&#39;containerInstanceArns&#39;</span><span class="p">]</span>
@@ -11850,7 +11847,7 @@ Set the number of instances (I choose 4), enable auto-assign public IP.   You ne
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">instance_list</span>
@@ -11864,14 +11861,12 @@ Set the number of instances (I choose 4), enable auto-assign public IP.   You ne
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[5]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[6]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[u&#39;arn:aws:ecs:us-west-2:066301190734:container-instance/12607795-a317-4732-8e6c-5e86f67b0630&#39;,
- u&#39;arn:aws:ecs:us-west-2:066301190734:container-instance/39158178-408e-4ff3-abc4-ed4734d70ced&#39;,
- u&#39;arn:aws:ecs:us-west-2:066301190734:container-instance/7c2516f0-8131-4f10-b3a5-1f8ca3a1e566&#39;,
- u&#39;arn:aws:ecs:us-west-2:066301190734:container-instance/e578f40c-0d4f-46f8-937d-c36e77ba6aa6&#39;]</pre>
+<pre>[u&#39;arn:aws:ecs:us-west-2:066301190734:container-instance/1976abce-a701-48d4-8d47-36203ec37030&#39;,
+ u&#39;arn:aws:ecs:us-west-2:066301190734:container-instance/6db24ef9-cd3d-484c-ae8d-68222ccdf553&#39;]</pre>
 </div>
 
 </div>
@@ -11879,10 +11874,20 @@ Set the number of instances (I choose 4), enable auto-assign public IP.   You ne
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>we can even get their IP addresses</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">ec2instances</span> <span class="o">=</span> <span class="p">[</span> <span class="n">client</span><span class="o">.</span><span class="n">describe_container_instances</span><span class="p">(</span>
@@ -11898,23 +11903,11 @@ Set the number of instances (I choose 4), enable auto-assign public IP.   You ne
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">ec2</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">resource</span><span class="p">(</span><span class="s1">&#39;ec2&#39;</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">instances</span> <span class="o">=</span> <span class="n">ec2</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span> <span class="n">Filters</span><span class="o">=</span><span class="p">[{</span><span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;instance-id&#39;</span><span class="p">,</span> <span class="s1">&#39;Values&#39;</span><span class="p">:</span> <span class="n">ec2instances</span><span class="p">}])</span>
+<span class="n">instances</span> <span class="o">=</span> <span class="n">ec2</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span> <span class="n">Filters</span><span class="o">=</span><span class="p">[{</span><span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;instance-id&#39;</span><span class="p">,</span> <span class="s1">&#39;Values&#39;</span><span class="p">:</span> <span class="n">ec2instances</span><span class="p">}])</span>
 <span class="k">for</span> <span class="n">instance</span> <span class="ow">in</span> <span class="n">instances</span><span class="p">:</span>
    <span class="k">print</span><span class="p">(</span><span class="n">instance</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">instance</span><span class="o">.</span><span class="n">instance_type</span><span class="p">,</span> <span class="n">instance</span><span class="o">.</span><span class="n">image_id</span><span class="p">,</span> <span class="n">instance</span><span class="o">.</span><span class="n">public_ip_address</span><span class="p">)</span>
 </pre></div>
@@ -11929,10 +11922,8 @@ Set the number of instances (I choose 4), enable auto-assign public IP.   You ne
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(&#39;i-00dd7298fca2948df&#39;, &#39;t2.medium&#39;, &#39;ami-1ccd1f7c&#39;, &#39;54.201.144.148&#39;)
-(&#39;i-057e2913cc97af6d0&#39;, &#39;t2.medium&#39;, &#39;ami-1ccd1f7c&#39;, &#39;54.186.99.177&#39;)
-(&#39;i-0f46d62b305a8487c&#39;, &#39;t2.medium&#39;, &#39;ami-1ccd1f7c&#39;, &#39;54.214.228.63&#39;)
-(&#39;i-089a5074ce074fc49&#39;, &#39;t2.medium&#39;, &#39;ami-1ccd1f7c&#39;, &#39;54.218.107.231&#39;)
+<pre>(&#39;i-091dd4eabc9c26ebf&#39;, &#39;m4.large&#39;, &#39;ami-022b9262&#39;, &#39;54.218.242.169&#39;)
+(&#39;i-0b3baa39032a638ff&#39;, &#39;m4.large&#39;, &#39;ami-022b9262&#39;, &#39;54.218.60.176&#39;)
 </pre>
 </div>
 </div>
@@ -11941,12 +11932,63 @@ Set the number of instances (I choose 4), enable auto-assign public IP.   You ne
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="now-we-will-create-the-first-task-definition">now we will create the first task definition<a class="anchor-link" href="#now-we-will-create-the-first-task-definition">&#182;</a></h1><p>we will have two services.</p>
+<p><ul></p>
+<p><li> The predictor service.   This services reads prediction jobs from the amazon sqs queue service, invokes the predictor to classify it, then it sends the classification, title, the service hostname, the correct answer and a sequence number to the table service.</p>
+<p><li> the table service.   this is a simple web service that waits for a message from a predictor service and then pushes the result to the aws dynamoDB in table "BookTable"
+&lt;/ul&gt;
+We start with the task definition of the for the table service.  specify that task definition family name, default network and our  AIM role that authorizes the service to use the queue and the dynamoDB.   We are going to deploy this as a docker container which we have saved to the Docker hub. (see the build files for this in directory table-service).  We also need to specify a port binding.</p>
+<p>note: the iam arn has been modified and the image is now assumed to be in your account.  (this notebook was run with valid accounts and then edited later for public viewing</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">list_task_definition_families</span><span class="p">()[</span><span class="s1">&#39;families&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">register_task_definition</span><span class="p">(</span>
+    <span class="n">family</span><span class="o">=</span><span class="s1">&#39;tableservice&#39;</span><span class="p">,</span>
+    <span class="n">networkMode</span><span class="o">=</span><span class="s1">&#39;bridge&#39;</span><span class="p">,</span>
+    <span class="n">taskRoleArn</span><span class="o">=</span> <span class="s1">&#39;arn:aws:iam::0123456789012:role/mymicroservices&#39;</span><span class="p">,</span>
+            
+    <span class="n">containerDefinitions</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;tableservice&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;image&#39;</span><span class="p">:</span> <span class="s1">&#39;yourdockerhubid/tableservice&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;cpu&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+            <span class="s1">&#39;memory&#39;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+            <span class="s1">&#39;memoryReservation&#39;</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
+            <span class="s1">&#39;portMappings&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;containerPort&#39;</span><span class="p">:</span> <span class="mi">8050</span><span class="p">,</span>
+                    <span class="s1">&#39;hostPort&#39;</span><span class="p">:</span> <span class="mi">8050</span><span class="p">,</span>
+                    <span class="s1">&#39;protocol&#39;</span><span class="p">:</span> <span class="s1">&#39;tcp&#39;</span>
+                <span class="p">},</span>
+            <span class="p">],</span>
+            <span class="s1">&#39;essential&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">],</span>
+ <span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">list_task_definitions</span><span class="p">(</span><span class="n">familyPrefix</span><span class="o">=</span><span class="s1">&#39;tableservice&#39;</span><span class="p">)[</span><span class="s1">&#39;taskDefinitionArns&#39;</span><span class="p">]</span>
 </pre></div>
 
 </div>
@@ -11957,100 +11999,11 @@ Set the number of instances (I choose 4), enable auto-assign public IP.   You ne
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[10]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[u&#39;awsque&#39;,
- u&#39;container-try-2&#39;,
- u&#39;defx&#39;,
- u&#39;esciencebook-task-def&#39;,
- u&#39;escinewer&#39;,
- u&#39;finaltry&#39;,
- u&#39;finaltryagain&#39;,
- u&#39;jupyter&#39;,
- u&#39;newsynth&#39;,
- u&#39;predict&#39;,
- u&#39;predictor-new&#39;,
- u&#39;table-manager&#39;]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[41]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">list_task_definitions</span><span class="p">(</span><span class="n">familyPrefix</span><span class="o">=</span><span class="s1">&#39;predict&#39;</span><span class="p">)[</span><span class="s1">&#39;taskDefinitionArns&#39;</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[41]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[u&#39;arn:aws:ecs:us-west-2:066301190734:task-definition/predict:1&#39;,
- u&#39;arn:aws:ecs:us-west-2:066301190734:task-definition/predict:2&#39;,
- u&#39;arn:aws:ecs:us-west-2:066301190734:task-definition/predict:3&#39;,
- u&#39;arn:aws:ecs:us-west-2:066301190734:task-definition/predict:4&#39;,
- u&#39;arn:aws:ecs:us-west-2:066301190734:task-definition/predict:5&#39;,
- u&#39;arn:aws:ecs:us-west-2:066301190734:task-definition/predict:6&#39;]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[42]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">describe_task_definition</span><span class="p">(</span><span class="n">taskDefinition</span><span class="o">=</span><span class="s1">&#39;predict:6&#39;</span><span class="p">)[</span><span class="s1">&#39;taskDefinition&#39;</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[42]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>{u&#39;containerDefinitions&#39;: [{u&#39;cpu&#39;: 20,
-   u&#39;environment&#39;: [],
-   u&#39;essential&#39;: True,
-   u&#39;image&#39;: u&#39;dbgannon/predict2&#39;,
-   u&#39;memoryReservation&#39;: 400,
-   u&#39;mountPoints&#39;: [],
-   u&#39;name&#39;: u&#39;predict&#39;,
-   u&#39;portMappings&#39;: [],
-   u&#39;volumesFrom&#39;: []}],
- u&#39;family&#39;: u&#39;predict&#39;,
- u&#39;networkMode&#39;: u&#39;bridge&#39;,
- u&#39;requiresAttributes&#39;: [{u&#39;name&#39;: u&#39;com.amazonaws.ecs.capability.docker-remote-api.1.21&#39;}],
- u&#39;revision&#39;: 6,
- u&#39;status&#39;: u&#39;ACTIVE&#39;,
- u&#39;taskDefinitionArn&#39;: u&#39;arn:aws:ecs:us-west-2:066301190734:task-definition/predict:6&#39;,
- u&#39;volumes&#39;: []}</pre>
+<pre>[u&#39;arn:aws:ecs:us-west-2:066301190734:task-definition/tableservice:1&#39;]</pre>
 </div>
 
 </div>
@@ -12064,23 +12017,55 @@ Set the number of instances (I choose 4), enable auto-assign public IP.   You ne
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The following will crecate a task revision of task definition predictor-new. that should be version 6, because there were 5 previous versions (not shown here).</p>
+<h1 id="now-we-create-the-tableservice-service">now we create the tableservice service<a class="anchor-link" href="#now-we-create-the-tableservice-service">&#182;</a></h1><p>note that when we create a task definition it gives it a sequnce number.<br>
+that is because we often revises the task definition during debugging.   We specify that we want at least 50% of our requested instances running at all time.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_service</span><span class="p">(</span> <span class="n">cluster</span><span class="o">=</span><span class="s1">&#39;cloudbook&#39;</span><span class="p">,</span> 
+                                 <span class="n">serviceName</span><span class="o">=</span><span class="s1">&#39;tableservice&#39;</span><span class="p">,</span> 
+                                 <span class="n">taskDefinition</span><span class="o">=</span><span class="s1">&#39;tableservice:1&#39;</span><span class="p">,</span> 
+                                 <span class="n">desiredCount</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">deploymentConfiguration</span><span class="o">=</span><span class="p">{</span>
+                                    <span class="s1">&#39;maximumPercent&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+                                    <span class="s1">&#39;minimumHealthyPercent&#39;</span><span class="p">:</span> <span class="mi">50</span> <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="now-the-task-definition-for-the-predictor.">now the task definition for the predictor.<a class="anchor-link" href="#now-the-task-definition-for-the-predictor.">&#182;</a></h1><p>note: the iam arn has been modified and the image is now assumed to be in your account</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">register_task_definition</span><span class="p">(</span>
-    <span class="n">family</span><span class="o">=</span><span class="s1">&#39;predictor-new&#39;</span><span class="p">,</span>
+    <span class="n">family</span><span class="o">=</span><span class="s1">&#39;predictor&#39;</span><span class="p">,</span>
     <span class="n">networkMode</span><span class="o">=</span><span class="s1">&#39;bridge&#39;</span><span class="p">,</span>
+    <span class="n">taskRoleArn</span><span class="o">=</span> <span class="s1">&#39;arn:aws:iam::012345678901:role/mymicroservices&#39;</span><span class="p">,</span>
+            
     <span class="n">containerDefinitions</span><span class="o">=</span><span class="p">[</span>
         <span class="p">{</span>
-            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;predictor-new&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;image&#39;</span><span class="p">:</span> <span class="s1">&#39;dbgannon/predictor-new&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;predictor&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;image&#39;</span><span class="p">:</span> <span class="s1">&#39;yourdocerhubid/predictor&#39;</span><span class="p">,</span>
             <span class="s1">&#39;cpu&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
             <span class="s1">&#39;memoryReservation&#39;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
             <span class="s1">&#39;essential&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
@@ -12096,10 +12081,10 @@ Set the number of instances (I choose 4), enable auto-assign public IP.   You ne
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">response</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">list_task_definitions</span><span class="p">(</span><span class="n">familyPrefix</span><span class="o">=</span><span class="s1">&#39;predictor&#39;</span><span class="p">)[</span><span class="s1">&#39;taskDefinitionArns&#39;</span><span class="p">]</span>
 </pre></div>
 
 </div>
@@ -12110,123 +12095,14 @@ Set the number of instances (I choose 4), enable auto-assign public IP.   You ne
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[34]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[21]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>{&#39;ResponseMetadata&#39;: {&#39;HTTPHeaders&#39;: {&#39;connection&#39;: &#39;keep-alive&#39;,
-   &#39;content-length&#39;: &#39;489&#39;,
-   &#39;content-type&#39;: &#39;application/x-amz-json-1.1&#39;,
-   &#39;date&#39;: &#39;Tue, 11 Oct 2016 18:29:42 GMT&#39;,
-   &#39;server&#39;: &#39;Server&#39;,
-   &#39;x-amzn-requestid&#39;: &#39;ad977843-8fe0-11e6-b135-efdf65d29c30&#39;},
-  &#39;HTTPStatusCode&#39;: 200,
-  &#39;RequestId&#39;: &#39;ad977843-8fe0-11e6-b135-efdf65d29c30&#39;,
-  &#39;RetryAttempts&#39;: 0},
- u&#39;taskDefinition&#39;: {u&#39;containerDefinitions&#39;: [{u&#39;cpu&#39;: 20,
-    u&#39;environment&#39;: [],
-    u&#39;essential&#39;: True,
-    u&#39;image&#39;: u&#39;dbgannon/predictor-new&#39;,
-    u&#39;memoryReservation&#39;: 400,
-    u&#39;mountPoints&#39;: [],
-    u&#39;name&#39;: u&#39;predictor-new&#39;,
-    u&#39;portMappings&#39;: [],
-    u&#39;volumesFrom&#39;: []}],
-  u&#39;family&#39;: u&#39;predictor-new&#39;,
-  u&#39;networkMode&#39;: u&#39;bridge&#39;,
-  u&#39;requiresAttributes&#39;: [{u&#39;name&#39;: u&#39;com.amazonaws.ecs.capability.docker-remote-api.1.21&#39;}],
-  u&#39;revision&#39;: 6,
-  u&#39;status&#39;: u&#39;ACTIVE&#39;,
-  u&#39;taskDefinitionArn&#39;: u&#39;arn:aws:ecs:us-west-2:066301190734:task-definition/predictor-new:6&#39;,
-  u&#39;volumes&#39;: []}}</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[35]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">register_task_definition</span><span class="p">(</span>
-    <span class="n">family</span><span class="o">=</span><span class="s1">&#39;table-manager&#39;</span><span class="p">,</span>
-    <span class="n">networkMode</span><span class="o">=</span><span class="s1">&#39;bridge&#39;</span><span class="p">,</span>
-    <span class="n">containerDefinitions</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;table-manager&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;image&#39;</span><span class="p">:</span> <span class="s1">&#39;dbgannon/table-service-bottle&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;cpu&#39;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
-            <span class="s1">&#39;memoryReservation&#39;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-            <span class="s1">&#39;portMappings&#39;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;containerPort&#39;</span><span class="p">:</span> <span class="mi">8050</span><span class="p">,</span>
-                    <span class="s1">&#39;hostPort&#39;</span><span class="p">:</span> <span class="mi">8050</span><span class="p">,</span>
-                    <span class="s1">&#39;protocol&#39;</span><span class="p">:</span> <span class="s1">&#39;tcp&#39;</span>
-                <span class="p">},</span>
-            <span class="p">],</span>
-
-            <span class="s1">&#39;essential&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-        <span class="p">},</span>
-    <span class="p">],</span>
- <span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[36]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">response</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[36]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>{&#39;ResponseMetadata&#39;: {&#39;HTTPHeaders&#39;: {&#39;connection&#39;: &#39;keep-alive&#39;,
-   &#39;content-length&#39;: &#39;554&#39;,
-   &#39;content-type&#39;: &#39;application/x-amz-json-1.1&#39;,
-   &#39;date&#39;: &#39;Tue, 11 Oct 2016 18:29:57 GMT&#39;,
-   &#39;server&#39;: &#39;Server&#39;,
-   &#39;x-amzn-requestid&#39;: &#39;b65fb353-8fe0-11e6-b135-efdf65d29c30&#39;},
-  &#39;HTTPStatusCode&#39;: 200,
-  &#39;RequestId&#39;: &#39;b65fb353-8fe0-11e6-b135-efdf65d29c30&#39;,
-  &#39;RetryAttempts&#39;: 0},
- u&#39;taskDefinition&#39;: {u&#39;containerDefinitions&#39;: [{u&#39;cpu&#39;: 400,
-    u&#39;environment&#39;: [],
-    u&#39;essential&#39;: True,
-    u&#39;image&#39;: u&#39;dbgannon/table-service-bottle&#39;,
-    u&#39;memoryReservation&#39;: 200,
-    u&#39;mountPoints&#39;: [],
-    u&#39;name&#39;: u&#39;table-manager&#39;,
-    u&#39;portMappings&#39;: [{u&#39;containerPort&#39;: 8050,
-      u&#39;hostPort&#39;: 8050,
-      u&#39;protocol&#39;: u&#39;tcp&#39;}],
-    u&#39;volumesFrom&#39;: []}],
-  u&#39;family&#39;: u&#39;table-manager&#39;,
-  u&#39;networkMode&#39;: u&#39;bridge&#39;,
-  u&#39;requiresAttributes&#39;: [{u&#39;name&#39;: u&#39;com.amazonaws.ecs.capability.docker-remote-api.1.21&#39;}],
-  u&#39;revision&#39;: 12,
-  u&#39;status&#39;: u&#39;ACTIVE&#39;,
-  u&#39;taskDefinitionArn&#39;: u&#39;arn:aws:ecs:us-west-2:066301190734:task-definition/table-manager:12&#39;,
-  u&#39;volumes&#39;: []}}</pre>
+<pre>[u&#39;arn:aws:ecs:us-west-2:066301190734:task-definition/predictor:1&#39;,
+ u&#39;arn:aws:ecs:us-west-2:066301190734:task-definition/predictor:2&#39;,
+ u&#39;arn:aws:ecs:us-west-2:066301190734:task-definition/predictor:3&#39;,
+ u&#39;arn:aws:ecs:us-west-2:066301190734:task-definition/predictor:4&#39;]</pre>
 </div>
 
 </div>
@@ -12240,25 +12116,22 @@ Set the number of instances (I choose 4), enable auto-assign public IP.   You ne
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>now we are going to create 8 instances of this new service based on this task definition</p>
+<h1 id="create-the-predictor-service">create the predictor service<a class="anchor-link" href="#create-the-predictor-service">&#182;</a></h1><p>As you can see from the above i am on the 4th iteration of the predictor (earlier versions had a few bugs).  Note that we are creating 8 copies of this service.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_service</span><span class="p">(</span>
-    <span class="n">cluster</span><span class="o">=</span><span class="s1">&#39;cloudbook&#39;</span><span class="p">,</span>
-    <span class="n">serviceName</span><span class="o">=</span><span class="s1">&#39;table-manager&#39;</span><span class="p">,</span>
-    <span class="n">taskDefinition</span><span class="o">=</span><span class="s1">&#39;table-manager:12&#39;</span><span class="p">,</span>
-    <span class="n">desiredCount</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>   
-    <span class="n">deploymentConfiguration</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;maximumPercent&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
-        <span class="s1">&#39;minimumHealthyPercent&#39;</span><span class="p">:</span> <span class="mi">50</span>
-    <span class="p">}</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_service</span><span class="p">(</span> <span class="n">cluster</span><span class="o">=</span><span class="s1">&#39;cloudbook&#39;</span><span class="p">,</span> 
+                                 <span class="n">serviceName</span><span class="o">=</span><span class="s1">&#39;predictor&#39;</span><span class="p">,</span> 
+                                 <span class="n">taskDefinition</span><span class="o">=</span><span class="s1">&#39;predictor:4&#39;</span><span class="p">,</span> 
+                                 <span class="n">desiredCount</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">deploymentConfiguration</span><span class="o">=</span><span class="p">{</span>
+                                    <span class="s1">&#39;maximumPercent&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+                                    <span class="s1">&#39;minimumHealthyPercent&#39;</span><span class="p">:</span> <span class="mi">50</span> <span class="p">}</span>
 <span class="p">)</span>
 </pre></div>
 
@@ -12267,163 +12140,19 @@ Set the number of instances (I choose 4), enable auto-assign public IP.   You ne
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">response</span>
-</pre></div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>now check to see how many services i have and how many tasks.  There should be 10 tasks</p>
 
 </div>
 </div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[38]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>{&#39;ResponseMetadata&#39;: {&#39;HTTPHeaders&#39;: {&#39;connection&#39;: &#39;keep-alive&#39;,
-   &#39;content-length&#39;: &#39;993&#39;,
-   &#39;content-type&#39;: &#39;application/x-amz-json-1.1&#39;,
-   &#39;date&#39;: &#39;Tue, 11 Oct 2016 18:30:12 GMT&#39;,
-   &#39;server&#39;: &#39;Server&#39;,
-   &#39;x-amzn-requestid&#39;: &#39;bf6d34a7-8fe0-11e6-b135-efdf65d29c30&#39;},
-  &#39;HTTPStatusCode&#39;: 200,
-  &#39;RequestId&#39;: &#39;bf6d34a7-8fe0-11e6-b135-efdf65d29c30&#39;,
-  &#39;RetryAttempts&#39;: 0},
- u&#39;service&#39;: {u&#39;clusterArn&#39;: u&#39;arn:aws:ecs:us-west-2:066301190734:cluster/cloudbook&#39;,
-  u&#39;createdAt&#39;: datetime.datetime(2016, 10, 11, 11, 30, 12, 868000, tzinfo=tzlocal()),
-  u&#39;deploymentConfiguration&#39;: {u&#39;maximumPercent&#39;: 100,
-   u&#39;minimumHealthyPercent&#39;: 50},
-  u&#39;deployments&#39;: [{u&#39;createdAt&#39;: datetime.datetime(2016, 10, 11, 11, 30, 12, 868000, tzinfo=tzlocal()),
-    u&#39;desiredCount&#39;: 4,
-    u&#39;id&#39;: u&#39;ecs-svc/9223370560644162930&#39;,
-    u&#39;pendingCount&#39;: 0,
-    u&#39;runningCount&#39;: 0,
-    u&#39;status&#39;: u&#39;PRIMARY&#39;,
-    u&#39;taskDefinition&#39;: u&#39;arn:aws:ecs:us-west-2:066301190734:task-definition/table-manager:12&#39;,
-    u&#39;updatedAt&#39;: datetime.datetime(2016, 10, 11, 11, 30, 12, 868000, tzinfo=tzlocal())},
-   {u&#39;createdAt&#39;: datetime.datetime(2016, 10, 11, 10, 58, 19, 790000, tzinfo=tzlocal()),
-    u&#39;desiredCount&#39;: 0,
-    u&#39;id&#39;: u&#39;ecs-svc/9223370560646076010&#39;,
-    u&#39;pendingCount&#39;: 0,
-    u&#39;runningCount&#39;: 0,
-    u&#39;status&#39;: u&#39;ACTIVE&#39;,
-    u&#39;taskDefinition&#39;: u&#39;arn:aws:ecs:us-west-2:066301190734:task-definition/table-manager:11&#39;,
-    u&#39;updatedAt&#39;: datetime.datetime(2016, 10, 11, 11, 24, 42, 249000, tzinfo=tzlocal())}],
-  u&#39;desiredCount&#39;: 4,
-  u&#39;events&#39;: [],
-  u&#39;loadBalancers&#39;: [],
-  u&#39;pendingCount&#39;: 0,
-  u&#39;runningCount&#39;: 0,
-  u&#39;serviceArn&#39;: u&#39;arn:aws:ecs:us-west-2:066301190734:service/table-manager&#39;,
-  u&#39;serviceName&#39;: u&#39;table-manager&#39;,
-  u&#39;status&#39;: u&#39;ACTIVE&#39;,
-  u&#39;taskDefinition&#39;: u&#39;arn:aws:ecs:us-west-2:066301190734:task-definition/table-manager:12&#39;}}</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[39]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">create_service</span><span class="p">(</span>
-    <span class="n">cluster</span><span class="o">=</span><span class="s1">&#39;cloudbook&#39;</span><span class="p">,</span>
-    <span class="n">serviceName</span><span class="o">=</span><span class="s1">&#39;predictor-new&#39;</span><span class="p">,</span>
-    <span class="n">taskDefinition</span><span class="o">=</span><span class="s1">&#39;predictor-new:6&#39;</span><span class="p">,</span>
-    <span class="n">desiredCount</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>   
-    <span class="n">deploymentConfiguration</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;maximumPercent&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
-        <span class="s1">&#39;minimumHealthyPercent&#39;</span><span class="p">:</span> <span class="mi">50</span>
-    <span class="p">}</span>
-<span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">response</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[20]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>{&#39;ResponseMetadata&#39;: {&#39;HTTPHeaders&#39;: {&#39;connection&#39;: &#39;keep-alive&#39;,
-   &#39;content-length&#39;: &#39;993&#39;,
-   &#39;content-type&#39;: &#39;application/x-amz-json-1.1&#39;,
-   &#39;date&#39;: &#39;Tue, 11 Oct 2016 17:28:54 GMT&#39;,
-   &#39;server&#39;: &#39;Server&#39;,
-   &#39;x-amzn-requestid&#39;: &#39;2ed68fbf-8fd8-11e6-b135-efdf65d29c30&#39;},
-  &#39;HTTPStatusCode&#39;: 200,
-  &#39;RequestId&#39;: &#39;2ed68fbf-8fd8-11e6-b135-efdf65d29c30&#39;,
-  &#39;RetryAttempts&#39;: 0},
- u&#39;service&#39;: {u&#39;clusterArn&#39;: u&#39;arn:aws:ecs:us-west-2:066301190734:cluster/cloudbook&#39;,
-  u&#39;createdAt&#39;: datetime.datetime(2016, 10, 11, 10, 28, 54, 339000, tzinfo=tzlocal()),
-  u&#39;deploymentConfiguration&#39;: {u&#39;maximumPercent&#39;: 100,
-   u&#39;minimumHealthyPercent&#39;: 50},
-  u&#39;deployments&#39;: [{u&#39;createdAt&#39;: datetime.datetime(2016, 10, 11, 10, 28, 54, 339000, tzinfo=tzlocal()),
-    u&#39;desiredCount&#39;: 8,
-    u&#39;id&#39;: u&#39;ecs-svc/9223370560647841459&#39;,
-    u&#39;pendingCount&#39;: 0,
-    u&#39;runningCount&#39;: 0,
-    u&#39;status&#39;: u&#39;PRIMARY&#39;,
-    u&#39;taskDefinition&#39;: u&#39;arn:aws:ecs:us-west-2:066301190734:task-definition/predictor-new:3&#39;,
-    u&#39;updatedAt&#39;: datetime.datetime(2016, 10, 11, 10, 28, 54, 339000, tzinfo=tzlocal())},
-   {u&#39;createdAt&#39;: datetime.datetime(2016, 10, 10, 17, 48, 14, 442000, tzinfo=tzlocal()),
-    u&#39;desiredCount&#39;: 0,
-    u&#39;id&#39;: u&#39;ecs-svc/9223370560707881348&#39;,
-    u&#39;pendingCount&#39;: 0,
-    u&#39;runningCount&#39;: 0,
-    u&#39;status&#39;: u&#39;ACTIVE&#39;,
-    u&#39;taskDefinition&#39;: u&#39;arn:aws:ecs:us-west-2:066301190734:task-definition/predictor-new:3&#39;,
-    u&#39;updatedAt&#39;: datetime.datetime(2016, 10, 10, 17, 52, 44, 831000, tzinfo=tzlocal())}],
-  u&#39;desiredCount&#39;: 8,
-  u&#39;events&#39;: [],
-  u&#39;loadBalancers&#39;: [],
-  u&#39;pendingCount&#39;: 0,
-  u&#39;runningCount&#39;: 0,
-  u&#39;serviceArn&#39;: u&#39;arn:aws:ecs:us-west-2:066301190734:service/predictor-new2&#39;,
-  u&#39;serviceName&#39;: u&#39;predictor-new2&#39;,
-  u&#39;status&#39;: u&#39;ACTIVE&#39;,
-  u&#39;taskDefinition&#39;: u&#39;arn:aws:ecs:us-west-2:066301190734:task-definition/predictor-new:3&#39;}}</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">list_services</span><span class="p">(</span> <span class="n">cluster</span><span class="o">=</span><span class="s1">&#39;cloudbook&#39;</span><span class="p">)[</span><span class="s1">&#39;serviceArns&#39;</span><span class="p">]</span>
@@ -12437,15 +12166,12 @@ Set the number of instances (I choose 4), enable auto-assign public IP.   You ne
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[14]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[30]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[u&#39;arn:aws:ecs:us-west-2:066301190734:service/predictor5&#39;,
- u&#39;arn:aws:ecs:us-west-2:066301190734:service/awsque1&#39;,
- u&#39;arn:aws:ecs:us-west-2:066301190734:service/table-manager&#39;,
- u&#39;arn:aws:ecs:us-west-2:066301190734:service/predictor6&#39;,
- u&#39;arn:aws:ecs:us-west-2:066301190734:service/synth9&#39;]</pre>
+<pre>[u&#39;arn:aws:ecs:us-west-2:066301190734:service/tableservice&#39;,
+ u&#39;arn:aws:ecs:us-west-2:066301190734:service/predictor&#39;]</pre>
 </div>
 
 </div>
@@ -12456,30 +12182,58 @@ Set the number of instances (I choose 4), enable auto-assign public IP.   You ne
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[79]:</div>
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">register_task_definition</span><span class="p">(</span>
-    <span class="n">family</span><span class="o">=</span><span class="s1">&#39;newsynth&#39;</span><span class="p">,</span>
-    <span class="n">networkMode</span><span class="o">=</span><span class="s1">&#39;bridge&#39;</span><span class="p">,</span>
-    <span class="n">containerDefinitions</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;synthcontainer3&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;image&#39;</span><span class="p">:</span> <span class="s1">&#39;066301190734.dkr.ecr.us-west-2.amazonaws.com/escibook&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;cpu&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
-            <span class="s1">&#39;memory&#39;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
-            <span class="s1">&#39;memoryReservation&#39;</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
-            <span class="s1">&#39;portMappings&#39;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="p">{</span>
-                    <span class="s1">&#39;containerPort&#39;</span><span class="p">:</span> <span class="mi">8000</span><span class="p">,</span>
-                    <span class="s1">&#39;hostPort&#39;</span><span class="p">:</span> <span class="mi">8010</span><span class="p">,</span>
-                    <span class="s1">&#39;protocol&#39;</span><span class="p">:</span> <span class="s1">&#39;tcp&#39;</span>
-                <span class="p">},</span>
-            <span class="p">],</span>
-            <span class="s1">&#39;essential&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-        <span class="p">},</span>
-    <span class="p">],</span>
- <span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">list_tasks</span><span class="p">(</span><span class="n">cluster</span><span class="o">=</span><span class="s1">&#39;cloudbook&#39;</span><span class="p">)[</span><span class="s1">&#39;taskArns&#39;</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[31]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[u&#39;arn:aws:ecs:us-west-2:066301190734:task/3d799728-2394-49a7-8dc3-85360b5290b0&#39;,
+ u&#39;arn:aws:ecs:us-west-2:066301190734:task/46761ea8-ed02-47c3-9eaa-06439427c94c&#39;,
+ u&#39;arn:aws:ecs:us-west-2:066301190734:task/5945b74f-697b-4e0c-b441-ca873e818f69&#39;,
+ u&#39;arn:aws:ecs:us-west-2:066301190734:task/8bd32b4f-6f86-4309-810a-bcf6141ef460&#39;,
+ u&#39;arn:aws:ecs:us-west-2:066301190734:task/988d5314-99d9-453c-bc8b-bda5fd33726e&#39;,
+ u&#39;arn:aws:ecs:us-west-2:066301190734:task/9d382215-60ab-4b71-8c18-0970cd278905&#39;,
+ u&#39;arn:aws:ecs:us-west-2:066301190734:task/9f657c58-f2fd-4bc1-8845-1129a64688e7&#39;,
+ u&#39;arn:aws:ecs:us-west-2:066301190734:task/c221c15c-9185-4d8e-92ae-b4b048f1158b&#39;,
+ u&#39;arn:aws:ecs:us-west-2:066301190734:task/e43e3441-3cf5-447d-b8a4-1804a69a09a6&#39;,
+ u&#39;arn:aws:ecs:us-west-2:066301190734:task/ef8ae905-488b-4a64-840c-7681835bde81&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now we are done.   Go to the notebook "load_sciml_data_sent_to_aws_queue" to run the data.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span> 
 </pre></div>
 
 </div>
