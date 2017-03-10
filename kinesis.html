@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>kinesis-spark-example</title>
+<title>kinesis</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -11753,9 +11753,50 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Using-Spark-to-do-Anamoly-predictions-for-streaming-data">Using Spark to do Anamoly predictions for streaming data<a class="anchor-link" href="#Using-Spark-to-do-Anamoly-predictions-for-streaming-data">&#182;</a></h1><p>We well use spark and a simple anomoly detector to look at the data from 30 different instrument streams coming through Kinesis.   We use Spark instead of Spark Streaming for two reasons.  First the Kinesis connector for Spark is somewhat unreliable and we want to do the anaomoly detection explicitly in the notebook.</p>
 <p>The data set being used here is based on a 24 hour sample of event streams of about 40 instruments similar to the ones used in the Chicago Array of Things project.  This data set is available for download.  A seperate program is used to read the dataset and push the events as fast as possible to Kinesis.   With one shard we can push the full collection of events to Kinesis in 40 minutes.</p>
+<h2 id="setup">setup<a class="anchor-link" href="#setup">&#182;</a></h2><p>To use this notebook you need an AWS account and a Kinesis stream.   There are several invironments in which this will run</p>
+<p><ul></p>
+<p><li> the jupyter/all-spark-notebook.</p>
+<p><li> The Azure linux DataScienceVM.
+&lt;/ul&gt;</p>
+<h2 id="jupyter/all-spark-notebook">jupyter/all-spark-notebook<a class="anchor-link" href="#jupyter/all-spark-notebook">&#182;</a></h2><p>you can run it with the following command</p>
+<p>docker run -it --rm -p 8888:8888  -v path-to-your-notebooks:/notebooks jupyter/all-spark-notebook</p>
+<p>The path to your notebooks is where you keep a copy of this notebook.</p>
+<p>You will also need you AWS crentials.   If you are running on your own machine can avoid loading your credentials explicitly of you can add a</p>
+<p>-v path-to-your-.aws:.aws</p>
+<p>to the above docker command.
+You will also need to install boto3 and tzlocal.  see below.
+Finally you will need the spark context object sc -  again see below.</p>
+<h2 id="Azure-linux-DataScienceVM">Azure linux DataScienceVM<a class="anchor-link" href="#Azure-linux-DataScienceVM">&#182;</a></h2><p>For this you are likely going to come in through JupyterHub at <a href="http://yourmIP:8000">http://yourmIP:8000</a>
+You will need to have the manager of the VM do the boto3 install and then you will need to do it locally.  have that person execute the following</p>
+<p>sudo /anaconda/envs/py35/bin/pip install boto3</p>
+<p>sudo /anaconda/bin/pip install boto3</p>
+<p>and do the same with tzlocal. Then you need to do it one more time as shown below.
+you will still need to  upload this notebook and you will need to have your aws credentials.</p>
+<p>When you load the notebook into Jupyter make sure you run with the kernel Spark-python. you can set it from the Kernel dropdown menu.</p>
+<h2 id="The-data-to-send-to-Kinesis">The data to send to Kinesis<a class="anchor-link" href="#The-data-to-send-to-Kinesis">&#182;</a></h2><p>The data and a program to send the data to Kinesis is in the directory kinesis-spark-AoT in the same place where you found this.  You need to run</p>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1">#This is where you need to install boto3 and tzlocal</span>
+<span class="c1">#if you are running in the azure datascienceVM uncomment these two lines</span>
+<span class="c1">#!/anaconda/bin/pip install boto3</span>
+<span class="c1">#!/anaconda/bin/pip install tzlocal</span>
+
+<span class="c1">#if you are running Jupyter/all-spark-notebook then uncomment these two lines</span>
+<span class="c1">#!pip install boto3</span>
+<span class="c1">#!pip install tzlocal</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -11790,6 +11831,24 @@ div#notebook {
 <h2 id="make-sure-we-have-the-Spark-Context">make sure we have the Spark Context<a class="anchor-link" href="#make-sure-we-have-the-Spark-Context">&#182;</a></h2>
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1">#If you are running in the Azure linux datascienceVM with the Spark-python kernel </span>
+<span class="c1">#you do not have do do anything.  you should already have the spark context as sc as shown below</span>
+<span class="c1">#if you are running in the Jupyter/all-spark-notebook you need to run these</span>
+<span class="c1">#two lines</span>
+<span class="c1">#from pyspark import SparkContext</span>
+<span class="c1">#sc= SparkContext(&#39;local&#39;, &#39;pyspark&#39;)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -11836,6 +11895,11 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;kinesis&#39;</span><span class="p">)</span>
+<span class="c1">#you may need to do the full boto3 client initialization.  if so it is</span>
+<span class="c1">#client = boto3.client(&#39;kinesis&#39;, region_name = &#39;us-west-2&#39;,</span>
+<span class="c1">#                     aws_access_key_id = &#39;ACCESSKEY&#39;,</span>
+<span class="c1">#                     aws_secret_access_key = &#39;secretkey&#39;</span>
+<span class="c1">#)</span>
 </pre></div>
 
 </div>

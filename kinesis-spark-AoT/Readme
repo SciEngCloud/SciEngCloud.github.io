@@ -1,0 +1,8 @@
+This is the program that can send the AoT events to kinesis. You first must create a stream.
+In this program it is called 'cloudbook2'
+you can run the program with the command
+>ipython kinesis-sender.py
+
+You then run the kinesis.ipynb from notebook 18 to see the results.
+
+
