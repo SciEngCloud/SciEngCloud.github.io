@@ -1,4 +1,5 @@
 import boto3
+import sys
 from socket import gethostname
 from predictor import predictor
 hostnm = gethostname()
@@ -19,6 +20,8 @@ w = f.read()
 webservice = w[:-1]
 
 print 'webservice = '+ webservice
+print 'port of table service ='+sys.argv[1]
+port = sys.argv[1]
 
 pred = predictor()
 
@@ -29,15 +32,15 @@ pred = predictor()
 # even better: for AWS we will use the IAM role we created
 # as described in the text
 
-#access_key = 'your access key'
-#secret_key = 'your secret key'
+access_key = 'YOUR AWS ACCCESSS KEY'
+secret_key = 'YOUR AWS Secrect key'
 
 
 
 sqs = boto3.resource('sqs',
         region_name='us-west-2', 
-#		aws_access_key_id = access_key,
-#		aws_secret_access_key = secret_key
+		aws_access_key_id = access_key,
+		aws_secret_access_key = secret_key
 		)
 queuename = 'bookque'
 try:
@@ -51,7 +54,7 @@ print(queue.attributes.get('DelaySeconds'))
 
 def sendrest(row, answer, predict, title):
 	try:
-		addr ="http://"+webservice+":8050/save_to_table"
+		addr ="http://"+webservice+":"+port+"/save_to_table"
 		dic = { 'RowKey': row, 'answer': answer, 'predicted': predict, 'title': title, 'hostnm':hostnm}
 		st = json.dumps(dic)
 		payload = {'string':st}

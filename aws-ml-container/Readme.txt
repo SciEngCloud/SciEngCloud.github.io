@@ -1,6 +1,7 @@
-This directory contains two subdirectories.
+This directory contains three subdirectories.
 1. predictor-service.   this is the service that pulls records from the aws queue and does the analysis.  You will need to uncompress the models files and build the service and save it to the dockerhub  
-2. table-service.  This is the container for the web service that waits for requests (which are json files) and load them into the Azure nosql table.  
+2. table-service.  This is the container for the web service that waits for requests (which are json files) and load them into the was DynamoDB nosql table.  
+2. table-service-azure.  This is the container for the web service that waits for requests (which are json files) and load them into the was Amazon  nosql table.  
 
 This directory also contains two jupyter notebooks.
 1.  boto3ecs is the notebook that can configure each of the two containers as services for AWS ECS.   You first must create 
