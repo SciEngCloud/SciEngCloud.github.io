@@ -1,4 +1,4 @@
-# Singularity: A Container System for MPI-based HPC Applications
+# Singularity: A Container System for HPC Applications
 
 In Chapter 6 we described the basic idea behind containerized applications and discussed Docker in some detail.   Docker allows us to build an application container that will run without change on any machine that can run the docker engine.  This is a fantastic way to share ready-to-run applications such as the tutorial container we built for this book, the Jupyter notebook server and many others.   In chapter 7 we discussed the various ways to scale applications in the cloud to exploit more parallelism.  We discussed how docker containers can be used as microservices that run on AWS, Azure and Google in their cloud-scale container management systems based on platforms like Kubernetes and Mesos.  In Chapter 7.2 we also described how you can build an HPC style cluster in the cloud to run MPI programs, however we did not discuss ways to run docker-based MPI programs on a distributed cluster.  It can be done, but it is not very efficient and many of the advanced networking features of a supercomputer are not usable from inside a Docker container.    
 
@@ -166,6 +166,10 @@ Container technology has revolutionized large scale cloud computing.  It is now 
 ## The Singularity Hub
 One of the great things about Docker is the Docker Hub which is the place where containers can be shared.    Singularity has its own Hub, but it works a little differently  from Docker Hub.  With the Docker Hub, you build and test your container on your own machine and then upload it to the Hub. You can then pull the container image from any machine that can contact the Docker Hub. The Singularity Hub actually builds the container from the Singularity spec file for your container. This method has one advantage and one disadvantage.  On the positive side, the size of any file you upload is far smaller than a typical Singularity image.   On the negative side, Singularity Hub cannot currently build any container.  For best results use a Singularity file that builds from a Docker image such as the example described here. We expect this problem will go away soon.
 
+Looking at the public images in the Singularity Hub you will see some very interesting examples.  There are several versions of the deep learning Tensorflow system that take advantage of the fact that Singularity containers can see special hardware like GPUs that are not yet available inside Docker containers.  Quantum state diffusion tools top the list of most frequent builds.  The neuroscience software package NeuroDebian has also been "Singularity-ized" and a host of life science related pipelines. 
+
+### Using Singularity Hub
+
 To use the Singularity Hub you put your Singularity spec file in a github repo as shown below. Here we have a github repository called dbgannon/singdoc2.  It contains the Singularity spec file we created in the previous section.  
 
 <img src="https:/SciEngCloud.github.io/git-hub-image.jpg" width="800">
@@ -202,12 +206,27 @@ The Singularity Hub site https://singularity-hub.org has good documentation that
 
 ## Final Thoughts
 
-We were interested in the performance overhead of using Singularity.   We made a simple set of measurements of a full ring program (similar to the one above but with a full loop of communication and run for 10000 cycles).  The overhead of the singularity based version versus a "native" version was less than 2%. We attribute this to possible paging issues involving the size of the Singularity image (2GBytes) versus 2KBytes of the "native" object program.   For a serious application, we expect this overhead to vanish.
+We were interested in the performance overhead of using Singularity.   We made a simple set of measurements of a full ring program (similar to the one above but with a full loop of communication and run for 10000 cycles).  The overhead of the singularity based version versus a "native" version was less than 2%. We attribute this to possible paging issues involving the size of the Singularity image (2GBytes) versus 2KBytes of the "native" object program.   For a serious application, we expect this overhead to vanish. 
+
+We hasten to add that Singularity is not just for MPI applications.  Any application or pipeline that needs access to GPUs or other special hardware is going to want to use Singularity.  In fact, it seems that the most common applications on Singularity Hub do not use MPI.      
 
 
+The example we used here was designed to illustrate how easy it is to use Singularity.  However, its triviality does not truly illustrate the full utility of the container concept.   Because a Singularity container is executed as a user level process it can be easily incorporated into regular scripted workflows and pipelines.   The container can also incorporate the workflow entirely in many cases.    For example, you can deploy Jupyter and start it from inside the container.  Then, from a notebook, you can interactively launch MPI jobs and do the data analysis on the fly.  In fact, we tried this experiment too. 
 
+We built a Docker container from "continuumio/anaconda" which includes an up-to-date version of all the Python tools and Jupyter.  We also included a directory that contained the necessary files to launch jupyter along with our favorite mpiprograms.  The Singularity spec file was identical to the one described above with the exception of the addition of one more exported path.
+<pre>
+export XDG_RUNTIME_DIR=/tmp/$UID
+</pre>
+After testing this on our Azure datascience VM and pushing it to Singularity Hub we waited for the build to complete.  Then running the commands on our AWS cluster
+<pre>
+$ singularity pull shub://dbgannon/singdoc2
+Progress |===================================| 100.0% 
+$ singularity exec dbgannon-singdoc2-master.img bash
+$ bash /mpicodes/jupyterrun.sh    
+</pre>
+gives us a running jupyter instance.  The image below shows a trivial Python notebook that can launch jobs on the cluster.  
 
-
-
+<img src="https:/SciEngCloud.github.io/jupyter-in-singularity.jpg" width="800">
+The reader may notice that the way we execute mpirun when it is on the host machine (where we are running in the container's OS) differs from when we are doing remote executions (where we are running in the host OS).  Another assumption we are making here is that we can open a port like 8887 on the head-node  of the cluster to incoming traffic so we can run the Jupyter interface in our desktop browser.  This is, of course, easy to do with our AWS cloudformation cluster, but likely not allowed on most institutional supercomputers.  
 
 
