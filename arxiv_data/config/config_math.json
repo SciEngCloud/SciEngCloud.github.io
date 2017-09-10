@@ -1,0 +1,17 @@
+{"subject": "math",
+"loadset": ["math.AC", "math.AG", "math.AP", "math.AT", "math.CA", "math.CO", "math.CT", 
+        "math.CV", "math.DG", "math.DS", "math.FA", "math.GM", "math.GN", "math.GR", "math.GT", 
+        "math.HO", "math.KT", "math.LO", "math.MG", "math.NA", "math.NT", "math.OA", "math.OC", 
+        "math.PR", "math.QA", "math.RA", "math.RT", "math.SG", "math.SP", "math.ST", 
+        "nlin.AO", "nlin.CD", "nlin.PS", "nlin.SI", "stat.AP", "stat.CO", "stat.ME", "stat.OT"],
+"basepath": "c:/users/dennis/desktop/",
+"supertopics": [["algebra", ["math.AG", "math.GR", "math.KT", "math.RA", "math.CT", "math.LO","math.OA",
+                            "math.RT", "math.QA", "math.AC"]],
+            [ "topology", ["math.AT", "math.GN", "math.GT", "math.MG", "math.SG", "math.DG"] ],
+            [ "analysis", ["math.DS", "math.AP","math.CA", "math.CV", "math.CO","math.OC", "math.SP", "math.FA","nlin.AO", "nlin.CD", "nlin.PS", "nlin.SI" ]],
+            [ "other", ["math.GM","math.NT", "math.ST", "math.HO", "math.PR", "math.NA", "stat.AP", "stat.CO", "stat.ME", "stat.OT" ]]
+              ]
+}
+
+      
+        
